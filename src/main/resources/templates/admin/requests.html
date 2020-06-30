@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee Requests</title>
+</head>
+<body>
+<div th:replace="nav-bar :: nav-bar"> </div>
+<div class="container">
+<div class="row">
+
+<table class="table table-bordered table-hover">
+                        <thead>
+                        <tr  >
+                            <th>Date</th>
+                            <th>EmpID</th>
+                            <th>Request</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody >
+                        <tr th:each="request: ${requests}">
+                            <td th:text="${request.getOrderDate()}"></td>
+                            <td th:text="${request.getEmployee().getEmp_id()}"></td>
+                            <td th:text="${request.getMessage()}"></td>
+                          
+                            <td>
+                            <form th:action="@{'/admin/request/delete/'+${request.getId()}}" th:method="POST">
+                          <button type="submit" sec:authorize="hasAuthority('ADMIN')" class="btn btn-warning btn-sm">Mark Completed</button>
+      						</form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+</div>
+</div>
+</div>
+
+</body>
+</html>

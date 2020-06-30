@@ -1,0 +1,60 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+
+
+<!--<tr th:each="item: ${session.cart}">
+    <td th:text="${item.product.productName}" />
+	<td th:text="${item.product.description}" />
+	<td th:text="${item.quantity}" />
+</tr>-->
+
+
+
+	<h3>Cart Page</h3>
+	<div th:with="total = 0">
+	<form action="#" th:action="@{/save}" th:object="${session.cart}" method="post">
+    
+
+	<table cellpadding="2" cellspacing="2" border="1">
+		<tr>
+			<th>Name</th>
+			
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Sub Total</th>
+			<th>Option</th>
+		</tr>
+		
+		<!--<c:set var="total" value="0"></c:set>
+		<c:forEach var="item" items="${cart }">
+			<c:set var="total"
+				value="${total + item.product.price * item.quantity }"></c:set>-->
+			<tr th:each="item: ${session.cart}">
+			
+				
+				<td th:text="${item.product.productName}"></td>
+				
+				<td th:text="${item.product.price}"></td>
+				<td th:text="${item.quantity}"></td>
+				<td th:text="${item.product.price * item.quantity}"></td>
+				<td align="center"><a
+					th:href="@{/cart/remove/{name}(name=${item.product.productName})}"
+					onclick="return confirm('Are you sure?')">Remove</a></td>
+				
+			</tr>
+		
+		<tr>
+			<td colspan="6" align="right">Sum</td>
+			<td th:text="${#aggregates.sum(session.cart.![product.price*quantity])}"></td>
+		</tr>
+	</table>
+	<button type="submit">SUbmit</button>
+	</form>
+	</div>
+
+	
+
+
+</body>
+</html>
